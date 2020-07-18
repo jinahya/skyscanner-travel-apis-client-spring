@@ -1,0 +1,19 @@
+{
+  "random": {
+    "data": [
+      "04719bc6-1316-4ce8-bf08-543c66d886de",
+      "12d4ebe3-a6a8-48b3-bdc7-fae11ee7ec91",
+      "33ea274c-7921-4a09-bd26-cbdd189a2a8a",
+      "b16ddfac-e63a-431c-96f8-6b9c4d39ca0f",
+      "41d780b7-4274-40f6-8e9f-777e957c8745",
+      "b4f476fb-5025-49a5-9106-7ff335d15bf0",
+      "ae520ab6-b859-4aa2-9530-f93f1fd90d61",
+      "6e57aa20-e4b2-42e2-bb75-6a67c01b2460"
+    ],
+    "completionTime": "2013-02-11 16:44:41Z"
+  },
+  "bitsUsed": 976,
+  "bitsLeft": 997556,
+  "requestsLeft": 199995,
+  "advisoryDelay": 0
+}

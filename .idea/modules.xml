@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/randomorg-api-bind.iml" filepath="$PROJECT_DIR$/randomorg-api-bind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skyscanner-travel-apis-bind.iml" filepath="$PROJECT_DIR$/skyscanner-travel-apis-bind.iml" />
+    </modules>
+  </component>
+</project>

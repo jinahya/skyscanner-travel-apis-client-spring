@@ -1,0 +1,15 @@
+{
+  "random": {
+    "data": [
+      0.8,
+      0.94,
+      0.72,
+      0.2
+    ],
+    "completionTime": "2013-01-25 19:21:15Z"
+  },
+  "bitsUsed": 27,
+  "bitsLeft": 199973,
+  "requestsLeft": 9999,
+  "advisoryDelay": 2000
+}

@@ -1,0 +1,7 @@
+{
+  "code": 303,
+  "message": "The resource identified by 'serialNumber' was not found",
+  "data": [
+    "serialNumber"
+  ]
+}
