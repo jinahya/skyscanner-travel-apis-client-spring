@@ -1,15 +1,17 @@
 package net.skyscanner.api.partners.apiservices.reference.v10;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import net.skyscanner.api.partners.apiservices.AbstractObject;
 
-import java.io.Serializable;
-
-@EqualsAndHashCode
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-public class Country implements Serializable {
+public class Country extends AbstractObject {
 
     private static final long serialVersionUID = 4215196899083662340L;
 

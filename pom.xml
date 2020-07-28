@@ -9,12 +9,12 @@
     <version>0.8.5</version>
   </parent>
 
-  <artifactId>skyscanner-travel-apis-bind</artifactId>
+  <artifactId>skyscanner-travel-apis-client-spring-webflux</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>${project.artifactId}</name>
-  <description>Types for binding JSON-RPC 2.0 Objects from random.org</description>
+  <description>Aclient library for accessing Skyscanner Travel APIs</description>
   <url>https://github.com/jinahya/${project.artifactId}</url>
   <inceptionYear>2020</inceptionYear>
   <organization>
@@ -46,10 +46,13 @@
     <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <version.com.fasterxml.jackson.core>2.11.1</version.com.fasterxml.jackson.core>
+    <version.com.fasterxml.jackson.datatype>${version.com.fasterxml.jackson.core}</version.com.fasterxml.jackson.datatype>
     <version.maven-javadoc-plugin>3.2.0</version.maven-javadoc-plugin>
     <version.maven-surefire>3.0.0-M4</version.maven-surefire>
     <version.org.junit.jupiter>5.7.0-M1</version.org.junit.jupiter>
     <version.org.projectlombok>1.18.12</version.org.projectlombok>
+    <version.org.springframework>5.2.8.RELEASE</version.org.springframework>
+    <version.org.springframework.boot>2.3.2.RELEASE</version.org.springframework.boot>
   </properties>
 
   <dependencyManagement>
@@ -72,7 +75,13 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${version.com.fasterxml.jackson.core}</version>
-      <scope>test</scope>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${version.com.fasterxml.jackson.core}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.validation</groupId>
@@ -109,6 +118,30 @@
       <artifactId>lombok</artifactId>
       <version>1.18.12</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.30</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${version.org.springframework}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webflux</artifactId>
+      <version>${version.org.springframework}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>${version.org.springframework.boot}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

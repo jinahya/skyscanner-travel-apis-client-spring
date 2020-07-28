@@ -2,26 +2,25 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for randomorg-api-bind" enabled="true">
+      <profile name="Annotation profile for skyscanner-travel-apis-client-spring-webflux" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar" />
         </processorPath>
-        <module name="randomorg-api-bind" />
-        <module name="skyscanner-travel-apis-bind" />
+        <module name="skyscanner-travel-apis-client-spring-webflux" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="randomorg-api-bind" target="1.8" />
-      <module name="skyscanner-travel-apis-bind" target="1.8" />
+      <module name="skyscanner-travel-apis-client-spring-webflux" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="randomorg-api-bind" options="-Xlint" />
-      <module name="skyscanner-travel-apis-bind" options="-Xlint" />
+      <module name="skyscanner-travel-apis-client-spring-webflux" options="-Xlint" />
     </option>
   </component>
 </project>
