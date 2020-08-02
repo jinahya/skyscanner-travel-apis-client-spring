@@ -1,5 +1,25 @@
 package com.github.jinahya.skyscanner.travel.apis.client.reactive;
 
+/*-
+ * #%L
+ * skyscanner-travel-apis-client-spring
+ * %%
+ * Copyright (C) 2020 Jinahya, Inc.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingRequest;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesSessionCreationRequest;
@@ -15,10 +35,10 @@ import static com.github.jinahya.skyscanner.travel.apis.client.Application.SYSTE
 @EnabledIf("#{systemProperties['" + SYSTEM_PROPERTY_NAME_API_KEY + "'] != null}")
 @SpringBootTest
 @Slf4j
-class FlightsLivePricesClientIT extends SkyscannerTravelApisReactiveClientIT<FlightsLivePricesClient> {
+class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<FlightsLivePricesReactiveClient> {
 
-    FlightsLivePricesClientIT() {
-        super(FlightsLivePricesClient.class);
+    FlightsLivePricesReactiveClientIT() {
+        super(FlightsLivePricesReactiveClient.class);
     }
 
     @Test

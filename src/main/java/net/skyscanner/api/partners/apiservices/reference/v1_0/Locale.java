@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices;
+package net.skyscanner.api.partners.apiservices.reference.v1_0;
 
 /*-
  * #%L
@@ -20,14 +20,27 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface FormDataEntry {
+import java.io.Serializable;
 
-    String name() default "";
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
+@Slf4j
+public class Locale implements Serializable {
+
+    private static final long serialVersionUID = -321386410394698200L;
+
+    private String code;
+
+    private String name;
 }

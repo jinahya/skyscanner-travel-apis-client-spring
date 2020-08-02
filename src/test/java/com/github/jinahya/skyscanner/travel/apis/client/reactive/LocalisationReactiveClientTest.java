@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices;
+package com.github.jinahya.skyscanner.travel.apis.client.reactive;
 
 /*-
  * #%L
@@ -20,14 +20,6 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+class LocalisationReactiveClientTest {
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface FormDataEntry {
-
-    String name() default "";
 }
