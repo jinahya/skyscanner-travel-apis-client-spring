@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.geo.v10;
+package net.skyscanner.api.partners.apiservices.geo.v1_0;
 
 /*-
  * #%L

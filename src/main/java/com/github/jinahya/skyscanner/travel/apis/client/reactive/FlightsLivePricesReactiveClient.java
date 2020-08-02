@@ -9,9 +9,9 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,7 +46,7 @@ import static reactor.core.publisher.Flux.generate;
 public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiveClient {
 
     // -----------------------------------------------------------------------------------------------------------------
-    public Mono<String> createSession(@Valid @NotNull final FlightsLivePricesSessionCreationRequest request) {
+    public @NotNull Mono<String> createSession(@Valid @NotNull final FlightsLivePricesSessionCreationRequest request) {
         return applyWebClient(c -> c
                 .post()
                 .uri(b -> b.pathSegment("pricing", "v1.0").build())
@@ -64,7 +64,7 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
         );
     }
 
-    public Flux<FlightsLivePricesResultPollingResponse> pollResult(
+    public @NotNull Flux<FlightsLivePricesResultPollingResponse> pollResult(
             @NotBlank final String location,
             @NotNull final FlightsLivePricesResultPollingRequest request) {
         return generate(

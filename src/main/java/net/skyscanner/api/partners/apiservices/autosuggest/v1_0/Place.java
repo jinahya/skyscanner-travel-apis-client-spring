@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.browsequotes.v10;
+package net.skyscanner.api.partners.apiservices.autosuggest.v1_0;
 
 /*-
  * #%L
@@ -20,11 +20,29 @@ package net.skyscanner.api.partners.apiservices.browsequotes.v10;
  * #L%
  */
 
-public class Quote {
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-    private String quoteId;
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@ToString
+@Setter
+@Getter
+@Slf4j
+public class Place {
 
-    private int minPrice;
+    private String placeId;
 
-    private boolean direct;
+    private String placeName;
+
+    private String countryId;
+
+    private String regionId;
+
+    private String cityId;
+
+    private String countryName;
 }

@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.browsequotes.v10;
+package net.skyscanner.api.partners.apiservices.browsequotes.v1_0;
 
 /*-
  * #%L

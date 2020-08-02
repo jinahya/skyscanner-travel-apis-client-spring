@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.autosuggest.v10;
+package net.skyscanner.api.partners.apiservices.autosuggest.v1_0;
 
 /*-
  * #%L
