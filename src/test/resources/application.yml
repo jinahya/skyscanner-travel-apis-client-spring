@@ -1,0 +1,6 @@
+spring:
+  codec:
+    max-in-memory-size: 20MB
+
+skyscanner-travel-apis:
+  root-uri: https://partners.api.skyscanner.net/apiservices

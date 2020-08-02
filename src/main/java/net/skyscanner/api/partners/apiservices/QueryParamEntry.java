@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface FormDataEntry {
+public @interface QueryParamEntry {
 
     String name() default "";
 }

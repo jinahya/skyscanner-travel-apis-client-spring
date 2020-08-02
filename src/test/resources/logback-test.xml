@@ -8,4 +8,7 @@
     <appender-ref ref="console"/>
   </root>
   <logger name="com.github.jinahya" level="debug"/>
+  <logger name="io.netty" level="info"/>
+  <logger name="org.springframework" level="info"/>
+  <logger name="reactor" level="info"/>
 </configuration>

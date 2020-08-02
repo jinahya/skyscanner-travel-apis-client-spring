@@ -5,19 +5,17 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.skyscanner.api.partners.apiservices.AbstractObject;
+import net.skyscanner.api.partners.apiservices.AbstractResponse;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-public class Country extends AbstractObject {
+public class Country extends AbstractResponse {
 
-    private static final long serialVersionUID = 4215196899083662340L;
+    private static final long serialVersionUID = 3201164038531344103L;
 
     private String code;
 
     private String name;
-
-    private transient Locale locale;
 }

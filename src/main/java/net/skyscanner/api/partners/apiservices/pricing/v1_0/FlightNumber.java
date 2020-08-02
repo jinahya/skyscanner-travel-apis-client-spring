@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.autosuggest.v10;
+package net.skyscanner.api.partners.apiservices.pricing.v1_0;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -12,17 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Getter
 @Slf4j
-public class Place {
+public class FlightNumber {
 
-    private String placeId;
+    private String flightNumber;
 
-    private String placeName;
-
-    private String countryId;
-
-    private String regionId;
-
-    private String cityId;
-
-    private String countryName;
+    private Long carrierId;
 }
