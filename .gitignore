@@ -11,5 +11,5 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 .idea
-
 !.idea/codeStyles
+*.iml
