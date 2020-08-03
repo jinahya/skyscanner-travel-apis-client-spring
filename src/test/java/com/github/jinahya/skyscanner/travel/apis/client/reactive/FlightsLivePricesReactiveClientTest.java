@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices.pricing.v1_0;
+package com.github.jinahya.skyscanner.travel.apis.client.reactive;
 
 /*-
  * #%L
@@ -20,28 +20,15 @@ package net.skyscanner.api.partners.apiservices.pricing.v1_0;
  * #L%
  */
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-import net.skyscanner.api.partners.apiservices.AbstractResponse;
+/**
+ * A class for unit-testing {@link FlightsLivePricesReactiveClient} class.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
+class FlightsLivePricesReactiveClientTest
+        extends SkyscannerTravelApisReactiveClientTest<FlightsLivePricesReactiveClient> {
 
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-@Setter
-@Getter
-@ToString
-@Slf4j
-public class Place extends AbstractResponse {
-
-    private Long id;
-
-    private Long parentId;
-
-    private String code;
-
-    private String type;
-
-    private String name;
+    FlightsLivePricesReactiveClientTest() {
+        super(FlightsLivePricesReactiveClient.class);
+    }
 }

@@ -9,9 +9,9 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,14 +20,26 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * #L%
  */
 
-/**
- * A no-op class for expanding component-scanning path.
- *
- * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
- */
-public final class _SkyscannerClientSpringNoOp {
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-    private _SkyscannerClientSpringNoOp() {
-        super();
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Slf4j
+public abstract class AbstractSkyscannerTravelApisClient {
+
+    /**
+     * A qualifier annotation for root URI of Skyscanner-Travel-APIs.
+     */
+    @Qualifier
+    @Documented
+    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface SkyscannerTravelApisRootUri {
+
     }
 }

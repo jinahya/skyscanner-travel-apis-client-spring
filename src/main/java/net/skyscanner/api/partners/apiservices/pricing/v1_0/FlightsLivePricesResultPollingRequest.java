@@ -9,9 +9,9 @@ package net.skyscanner.api.partners.apiservices.pricing.v1_0;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,6 +34,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.AbstractRequest;
 import org.springframework.lang.Nullable;
@@ -46,6 +47,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@Setter(AccessLevel.NONE)
 @Getter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor

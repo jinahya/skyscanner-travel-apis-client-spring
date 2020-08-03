@@ -9,9 +9,9 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import static com.github.jinahya.skyscanner.travel.apis.client.Application.SYSTEM_PROPERTY_NAME_API_KEY;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @EnabledIf("#{systemProperties['" + SYSTEM_PROPERTY_NAME_API_KEY + "'] != null}")
 @SpringBootTest
@@ -55,17 +56,16 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
                 .inboundDate(today.plus(12, ChronoUnit.DAYS))
                 .adults(1)
                 .build();
+        final String location = clientInstance().createSession(sessionCreationRequest).block();
+        log.debug("location: {}", location);
+        assertNotNull(location);
         final FlightsLivePricesResultPollingRequest resultPollingRequest
                 = FlightsLivePricesResultPollingRequest.builder()
                 .build();
-        final String location = applyClientInstance(c -> c.createSession(sessionCreationRequest)).block();
-        acceptClientInstance(c -> {
-            c.pollResult(location, resultPollingRequest)
-                    .doOnNext(r -> {
-                        log.debug("flights live prices response: {}", r.hashCode());
-                    })
-                    .blockLast();
-            ;
-        });
+        clientInstance().pollResult(location, resultPollingRequest)
+                .doOnNext(r -> {
+                    log.debug("flights live prices response: {}", r.hashCode());
+                })
+                .blockLast();
     }
 }

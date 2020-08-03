@@ -9,9 +9,9 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,7 +36,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
-import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseArray;
+import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseWrappedArrayInDocument;
 import static com.github.jinahya.skyscanner.travel.apis.client.utils.ResponseSpecUtils.pipeBodyAndAccept;
 import static java.nio.channels.Channels.newInputStream;
 
@@ -57,7 +57,8 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-                            parseArray(parser, "Locales", Locale.class, sink::next);
+                            //parseFirstArrayInDocument(parser, "Locales", Locale.class, sink::next);
+                            parseWrappedArrayInDocument(parser, Locale.class, sink::next);
                             sink.complete();
                         }
                     } catch (final IOException ioe) {
@@ -78,7 +79,8 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-                            parseArray(parser, "Currencies", Currency.class, sink::next);
+//                            parseFirstArrayInDocument(parser, "Currencies", Currency.class, sink::next);
+                            parseWrappedArrayInDocument(parser, Currency.class, sink::next);
                             sink.complete();
                         }
                     } catch (final IOException ioe) {
@@ -99,7 +101,8 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-                            parseArray(parser, "Countries", Country.class, sink::next);
+//                            parseFirstArrayInDocument(parser, "Countries", Country.class, sink::next);
+                            parseWrappedArrayInDocument(parser, Country.class, sink::next);
                             sink.complete();
                         }
                     } catch (final IOException ioe) {

@@ -65,14 +65,13 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
     }
 
     public @NotNull Flux<FlightsLivePricesResultPollingResponse> pollResult(
-            @NotBlank final String location,
-            @NotNull final FlightsLivePricesResultPollingRequest request) {
+            @NotBlank final String location, @NotNull final FlightsLivePricesResultPollingRequest request) {
         return generate(
                 () -> FlightsLivePricesResultPollingResponse.ofStatus(UpdatesPending),
-                (status, sink) -> {
-                    if (status.getStatus() == UpdatesComplete) {
-                        sink.complete();
-                        return status;
+                (p, s) -> { // previous, sink
+                    if (p.getStatus() == UpdatesComplete) {
+                        s.complete();
+                        return p;
                     }
                     return applyWebClient(c -> c
                             .get()
@@ -80,8 +79,8 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
                             .accept(MediaType.APPLICATION_JSON)
                             .retrieve()
                             .bodyToMono(FlightsLivePricesResultPollingResponse.class)
-                            .doOnNext(sink::next)
-                            .doOnError(sink::error)
+                            .doOnNext(s::next)
+                            .doOnError(s::error)
                             .block()
                     );
                 }

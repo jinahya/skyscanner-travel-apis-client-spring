@@ -9,9 +9,9 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jinahya.skyscanner.travel.apis.client.AbstractSkyscannerTravelApisClient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -54,7 +55,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseArray;
+import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseWrappedArrayInDocument;
 import static java.nio.channels.Channels.newInputStream;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.core.io.buffer.DataBufferUtils.releaseConsumer;
@@ -62,7 +63,7 @@ import static org.springframework.core.io.buffer.DataBufferUtils.write;
 
 @Accessors(fluent = true)
 @Slf4j
-public abstract class SkyscannerTravelApisReactiveClient {
+public abstract class SkyscannerTravelApisReactiveClient extends AbstractSkyscannerTravelApisClient {
 
     /**
      * A qualifier annotation for an instance of {@link WebClient} for accessing Skyscanner Travel APIs.
@@ -107,7 +108,8 @@ public abstract class SkyscannerTravelApisReactiveClient {
             );
         }
         try (JsonParser parser = objectMapper.createParser(newInputStream(pipe.source()))) {
-            parseArray(parser, "Places", Place.class, processor::onNext);
+//            parseFirstArrayInDocument(parser, "Places", Place.class, processor::onNext);
+            parseWrappedArrayInDocument(parser, Place.class, processor::onNext);
         }
         processor.onComplete();
         return writer;
