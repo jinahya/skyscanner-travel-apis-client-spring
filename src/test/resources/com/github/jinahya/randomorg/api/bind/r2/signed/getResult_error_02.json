@@ -1,7 +1,0 @@
-{
-  "code": 303,
-  "message": "The resource identified by 'apiKey' was not found",
-  "data": [
-    "apiKey"
-  ]
-}
