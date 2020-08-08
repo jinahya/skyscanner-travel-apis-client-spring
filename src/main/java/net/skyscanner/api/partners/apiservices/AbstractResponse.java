@@ -20,6 +20,9 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractResponse extends AbstractObject {
 
 }

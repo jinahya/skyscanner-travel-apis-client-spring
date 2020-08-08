@@ -24,12 +24,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.Place;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.PlaceRequest;
+import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.Places;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.PlacesRequest;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientException;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
@@ -86,27 +88,24 @@ public class PlacesReactiveClient extends SkyscannerTravelApisReactiveClient {
     }
 
     @NonNull
-    public Mono<Void> retrievePlace(@Valid @NotNull PlaceRequest request,
-                                    @NotNull final FluxSink<? super Place> sink) {
-        final WebClient.ResponseSpec response = webClient()
+    public Mono<Place> retrievePlace(@Valid @NotNull PlaceRequest request) {
+        return webClient()
                 .get()
                 .uri(b -> b.pathSegment("autosuggest", "v1.0", "{country}", "{currency}", "{locale}")
                         .queryParam("id", request.getId())
                         .build(request.getCountry(), request.getCurrency(), request.getLocale()))
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve();
-        return pipeBodyAndAccept(
-                response,
-                c -> {
-                    try {
-                        try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-                            parseWrappedArrayInDocument(parser, Place.class, sink::next);
-                            sink.complete();
-                        }
-                    } catch (final IOException ioe) {
-                        sink.error(ioe);
+                .retrieve()
+                .bodyToMono(Places.class)
+                .handle((b, s) -> {
+                    if (b.getPlaces().size() != 1) {
+                        s.error(new WebClientException("no place retrieved") {
+                        });
+                        return;
                     }
-                }
-        );
+                    s.next(b.getPlaces().get(0));
+                    s.complete();
+                })
+                ;
     }
 }

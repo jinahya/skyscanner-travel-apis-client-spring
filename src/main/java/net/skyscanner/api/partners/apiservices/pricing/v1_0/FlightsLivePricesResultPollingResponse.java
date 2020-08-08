@@ -39,7 +39,7 @@ import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @ToString
-@Setter
+@Setter(AccessLevel.PROTECTED)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

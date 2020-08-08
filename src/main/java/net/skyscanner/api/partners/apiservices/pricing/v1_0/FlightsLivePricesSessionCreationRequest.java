@@ -26,12 +26,13 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.AbstractRequest;
 import net.skyscanner.api.partners.apiservices.FormDataEntries;
@@ -56,12 +57,12 @@ import static java.util.Optional.ofNullable;
 import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-@Setter
+@Setter(AccessLevel.PROTECTED)
 @Getter
 @ToString(callSuper = true)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
-@SuperBuilder
+@Builder
 @Slf4j
 public class FlightsLivePricesSessionCreationRequest extends AbstractRequest {
 

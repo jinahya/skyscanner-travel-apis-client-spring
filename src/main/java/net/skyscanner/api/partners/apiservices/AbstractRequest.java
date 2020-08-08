@@ -20,23 +20,11 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.constraints.NotBlank;
-
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@SuperBuilder
+@ToString(callSuper = true)
 @Slf4j
 public abstract class AbstractRequest extends AbstractObject {
 
-    @NotBlank
-    private String apiKey;
 }

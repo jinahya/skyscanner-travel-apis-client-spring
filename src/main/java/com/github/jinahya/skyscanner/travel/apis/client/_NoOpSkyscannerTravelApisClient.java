@@ -25,9 +25,9 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  *
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public final class _SkyscannerTravelApisClientSpringNoOp {
+public final class _NoOpSkyscannerTravelApisClient {
 
-    private _SkyscannerTravelApisClientSpringNoOp() {
+    private _NoOpSkyscannerTravelApisClient() {
         super();
     }
 }

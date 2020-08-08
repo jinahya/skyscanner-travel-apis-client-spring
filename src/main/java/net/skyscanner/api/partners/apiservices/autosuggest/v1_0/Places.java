@@ -1,4 +1,4 @@
-package com.github.jinahya.skyscanner.travel.apis.client;
+package net.skyscanner.api.partners.apiservices.autosuggest.v1_0;
 
 /*-
  * #%L
@@ -20,14 +20,23 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * #L%
  */
 
-import static java.util.Objects.requireNonNull;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import net.skyscanner.api.partners.apiservices.AbstractResponse;
 
-public abstract class AbstractSkyscannerTravelApisClientTest<T extends AbstractSkyscannerTravelApisClient> {
+import java.util.List;
 
-    protected AbstractSkyscannerTravelApisClientTest(final Class<T> clientClass) {
-        super();
-        this.clientClass = requireNonNull(clientClass, "clientClass is null");
-    }
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@ToString
+@Setter(AccessLevel.PROTECTED)
+@Getter
+@Slf4j
+public class Places extends AbstractResponse {
 
-    protected Class<T> clientClass;
+    private List<Place> places;
 }

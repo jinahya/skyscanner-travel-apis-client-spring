@@ -47,10 +47,10 @@ import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.joining;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-@Setter(AccessLevel.NONE)
+@Setter(AccessLevel.PROTECTED)
 @Getter
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 @Slf4j
 public class FlightsLivePricesResultPollingRequest extends AbstractRequest {

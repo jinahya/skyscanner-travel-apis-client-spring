@@ -70,10 +70,10 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
             @NotBlank final String location, @NotNull final FlightsLivePricesResultPollingRequest request) {
         return Flux.generate(
                 () -> FlightsLivePricesResultPollingResponse.ofStatus(UpdatesPending),
-                (status, sink) -> {
-                    if (status.getStatus() == UpdatesComplete) {
+                (state, sink) -> {
+                    if (state.getStatus() == UpdatesComplete) {
                         sink.complete();
-                        return status;
+                        return state;
                     }
                     return webClient()
                             .get()

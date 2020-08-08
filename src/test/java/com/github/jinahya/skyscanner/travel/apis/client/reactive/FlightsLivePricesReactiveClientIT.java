@@ -24,9 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingRequest;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesSessionCreationRequest;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
+import javax.validation.Validator;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -42,6 +44,7 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
         super(FlightsLivePricesReactiveClient.class);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Test
     void testFlightsLivePrices() {
         final LocalDate today = LocalDate.now();
@@ -61,10 +64,18 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
         final FlightsLivePricesResultPollingRequest resultPollingRequest
                 = FlightsLivePricesResultPollingRequest.builder()
                 .build();
-        clientInstance().pollResult(location, resultPollingRequest)
+        clientInstance()
+                .pollResult(location, resultPollingRequest)
                 .doOnNext(r -> {
                     log.debug("flights live prices response: {}", r.hashCode());
+                    assertThat(validator.validate(r))
+                            .isNotNull()
+                            .isEmpty();
                 })
                 .blockLast();
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Autowired
+    private Validator validator;
 }
