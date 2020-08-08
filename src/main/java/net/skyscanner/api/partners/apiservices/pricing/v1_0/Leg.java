@@ -22,6 +22,7 @@ package net.skyscanner.api.partners.apiservices.pricing.v1_0;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,7 +35,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-@Setter
+@Setter(AccessLevel.PROTECTED)
 @Getter
 @ToString
 @Slf4j

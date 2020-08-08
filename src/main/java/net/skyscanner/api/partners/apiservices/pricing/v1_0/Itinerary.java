@@ -22,7 +22,10 @@ package net.skyscanner.api.partners.apiservices.pricing.v1_0;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.AbstractResponse;
 
@@ -32,13 +35,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-@Data
+@Setter(AccessLevel.PROTECTED)
+@Getter
+@ToString
 @Slf4j
 public class Itinerary extends AbstractResponse {
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-    @Data
+    @Setter(AccessLevel.PROTECTED)
+    @Getter
+    @ToString
     @Slf4j
     public static class PricingOption extends AbstractResponse {
 
@@ -52,7 +59,9 @@ public class Itinerary extends AbstractResponse {
     }
 
     @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-    @Data
+    @Setter(AccessLevel.PROTECTED)
+    @Getter
+    @ToString
     @Slf4j
     public static class BookingDetailsLink extends AbstractResponse {
 
