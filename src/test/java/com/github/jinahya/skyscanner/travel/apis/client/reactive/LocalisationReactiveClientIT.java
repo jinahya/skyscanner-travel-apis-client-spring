@@ -26,7 +26,6 @@ import net.skyscanner.api.partners.apiservices.reference.v1_0.Currency;
 import net.skyscanner.api.partners.apiservices.reference.v1_0.Locale;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.DirectProcessor;
-import reactor.core.publisher.FluxSink;
 
 @Slf4j
 class LocalisationReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<LocalisationReactiveClient> {
@@ -36,38 +35,35 @@ class LocalisationReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<
     }
 
     @Test
-    void testLocales() {
+    void testRetrieveLocales() {
         final DirectProcessor<Locale> processor = DirectProcessor.create();
         processor.subscribe(l -> {
             log.debug("locale: {}", l);
         });
-        final FluxSink<Locale> sink = processor.sink();
         clientInstance()
-                .locales(sink)
+                .retrieveLocales(processor.sink())
                 .block();
     }
 
     @Test
-    void testCurrencies() {
+    void testRetrieveCurrencies() {
         final DirectProcessor<Currency> processor = DirectProcessor.create();
         processor.subscribe(c -> {
             log.debug("currency: {}", c);
         });
-        final FluxSink<Currency> sink = processor.sink();
         clientInstance()
-                .currencies(sink)
+                .retrieveCurrencies(processor.sink())
                 .block();
     }
 
     @Test
-    void testMarkets() {
+    void testRetrieveMarkets() {
         final DirectProcessor<Country> processor = DirectProcessor.create();
         processor.subscribe(c -> {
             log.debug("country: {}", c);
         });
-        final FluxSink<Country> sink = processor.sink();
         clientInstance()
-                .markets("ko-KR", sink)
+                .retrieveMarkets("ko-KR", processor.sink())
                 .block();
     }
 }

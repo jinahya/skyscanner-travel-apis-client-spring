@@ -20,9 +20,7 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * #L%
  */
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingRequest;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingResponse;
@@ -34,11 +32,14 @@ import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import static net.skyscanner.api.partners.apiservices.QueryParamEntries.queryParams;
 import static net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingResponse.Status.UpdatesComplete;
 import static net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingResponse.Status.UpdatesPending;
 import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
-import static reactor.core.publisher.Flux.generate;
 
 @Validated
 @Component
@@ -46,8 +47,9 @@ import static reactor.core.publisher.Flux.generate;
 public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiveClient {
 
     // -----------------------------------------------------------------------------------------------------------------
-    public @NotNull Mono<String> createSession(@Valid @NotNull final FlightsLivePricesSessionCreationRequest request) {
-        return applyWebClient(c -> c
+    @NonNull
+    public Mono<String> createSession(@Valid @NotNull final FlightsLivePricesSessionCreationRequest request) {
+        return webClient()
                 .post()
                 .uri(b -> b.pathSegment("pricing", "v1.0").build())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -60,29 +62,29 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
                         return;
                     }
                     s.next(location);
-                })
-        );
+                });
     }
 
-    public @NotNull Flux<FlightsLivePricesResultPollingResponse> pollResult(
+    @NonNull
+    public Flux<FlightsLivePricesResultPollingResponse> pollResult(
             @NotBlank final String location, @NotNull final FlightsLivePricesResultPollingRequest request) {
-        return generate(
+        return Flux.generate(
                 () -> FlightsLivePricesResultPollingResponse.ofStatus(UpdatesPending),
-                (p, s) -> { // previous, sink
-                    if (p.getStatus() == UpdatesComplete) {
-                        s.complete();
-                        return p;
+                (status, sink) -> {
+                    if (status.getStatus() == UpdatesComplete) {
+                        sink.complete();
+                        return status;
                     }
-                    return applyWebClient(c -> c
+                    return webClient()
                             .get()
                             .uri(location, b -> b.queryParams(queryParams(request)).build())
                             .accept(MediaType.APPLICATION_JSON)
                             .retrieve()
                             .bodyToMono(FlightsLivePricesResultPollingResponse.class)
-                            .doOnNext(s::next)
-                            .doOnError(s::error)
+                            .doOnNext(sink::next)
+                            .doOnError(sink::error)
                             .block()
-                    );
+                            ;
                 }
         );
     }

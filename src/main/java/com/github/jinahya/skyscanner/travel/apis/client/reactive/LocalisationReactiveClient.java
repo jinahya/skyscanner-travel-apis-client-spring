@@ -21,34 +21,49 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  */
 
 import com.fasterxml.jackson.core.JsonParser;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.reference.v1_0.Country;
 import net.skyscanner.api.partners.apiservices.reference.v1_0.Currency;
 import net.skyscanner.api.partners.apiservices.reference.v1_0.Locale;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseWrappedArrayInDocument;
 import static com.github.jinahya.skyscanner.travel.apis.client.utils.ResponseSpecUtils.pipeBodyAndAccept;
 import static java.nio.channels.Channels.newInputStream;
 
+/**
+ * A client related to <a href="https://skyscanner.github.io/slate/#localisation">Localisation</a>.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Validated
 @Component
 @Slf4j
 public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClient {
 
     // -----------------------------------------------------------------------------------------------------------------
-    @NotNull
-    public Mono<Void> locales(@NotNull final FluxSink<? super Locale> sink) {
-        final WebClient.ResponseSpec response = webClient().get()
+
+    /**
+     * Retrieve locales.
+     *
+     * @param sink a flux sink to which parsed elements are pushed.
+     * @return a mono to block.
+     * @see <a href="https://skyscanner.github.io/slate/#locales">Locales</a>
+     */
+    @NonNull
+    public Mono<Void> retrieveLocales(@NotNull final FluxSink<? super Locale> sink) {
+        final WebClient.ResponseSpec response = webClient()
+                .get()
                 .uri(b -> b.pathSegment("reference", "v1.0", "locales").build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve();
@@ -57,7 +72,6 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-                            //parseFirstArrayInDocument(parser, "Locales", Locale.class, sink::next);
                             parseWrappedArrayInDocument(parser, Locale.class, sink::next);
                             sink.complete();
                         }
@@ -68,8 +82,15 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
         );
     }
 
-    @NotNull
-    public Mono<Void> currencies(@NotNull final FluxSink<? super Currency> sink) {
+    /**
+     * Retrieves currencies.
+     *
+     * @param sink a flux sink to which parsed elements are pushed.
+     * @return a mono to block.
+     * @see <a href="https://skyscanner.github.io/slate/#currencies">Currencies</a>
+     */
+    @NonNull
+    public Mono<Void> retrieveCurrencies(@NotNull final FluxSink<? super Currency> sink) {
         final WebClient.ResponseSpec response = webClient().get()
                 .uri(b -> b.pathSegment("reference", "v1.0", "currencies").build())
                 .accept(MediaType.APPLICATION_JSON)
@@ -79,7 +100,6 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-//                            parseFirstArrayInDocument(parser, "Currencies", Currency.class, sink::next);
                             parseWrappedArrayInDocument(parser, Currency.class, sink::next);
                             sink.complete();
                         }
@@ -90,8 +110,16 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
         );
     }
 
-    @NotNull
-    public Mono<Void> markets(@NotBlank final String locale, @NotNull final FluxSink<? super Country> sink) {
+    /**
+     * Retrieves market countries.
+     *
+     * @param locale a locale of preferred language of the result.
+     * @param sink   a flux sink to which parsed elements are pushed.
+     * @return a mono to block
+     * @see <a href="https://skyscanner.github.io/slate/#markets">Markets</a>
+     */
+    @NonNull
+    public Mono<Void> retrieveMarkets(@NotBlank final String locale, @NotNull final FluxSink<? super Country> sink) {
         final WebClient.ResponseSpec response = webClient().get()
                 .uri(b -> b.pathSegment("reference", "v1.0", "countries", locale).build())
                 .accept(MediaType.APPLICATION_JSON)
@@ -101,7 +129,6 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
                 c -> {
                     try {
                         try (JsonParser parser = objectMapper().createParser(newInputStream(c))) {
-//                            parseFirstArrayInDocument(parser, "Countries", Country.class, sink::next);
                             parseWrappedArrayInDocument(parser, Country.class, sink::next);
                             sink.complete();
                         }

@@ -29,8 +29,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @ToString
 @Getter
@@ -38,7 +36,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Slf4j
-public class PlacesRequest {
+public class PlaceRequest {
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
@@ -50,7 +48,6 @@ public class PlacesRequest {
     @NotBlank
     private String locale;
 
-    @Size(min = 2)
-    @NotNull
-    private String query;
+    @NotBlank
+    private String id;
 }

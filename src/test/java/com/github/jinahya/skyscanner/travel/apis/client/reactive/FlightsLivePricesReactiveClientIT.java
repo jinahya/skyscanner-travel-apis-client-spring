@@ -31,7 +31,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import static com.github.jinahya.skyscanner.travel.apis.client.Application.SYSTEM_PROPERTY_NAME_API_KEY;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @EnabledIf("#{systemProperties['" + SYSTEM_PROPERTY_NAME_API_KEY + "'] != null}")
 @SpringBootTest
@@ -57,8 +57,7 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
                 .adults(1)
                 .build();
         final String location = clientInstance().createSession(sessionCreationRequest).block();
-        log.debug("location: {}", location);
-        assertNotNull(location);
+        assertThat(location).isNotEmpty();
         final FlightsLivePricesResultPollingRequest resultPollingRequest
                 = FlightsLivePricesResultPollingRequest.builder()
                 .build();

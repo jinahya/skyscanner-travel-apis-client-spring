@@ -20,10 +20,10 @@ package net.skyscanner.api.partners.apiservices.geo.v1_0;
  * #L%
  */
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import net.skyscanner.api.partners.apiservices.AbstractResponse;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Continent extends AbstractResponse {

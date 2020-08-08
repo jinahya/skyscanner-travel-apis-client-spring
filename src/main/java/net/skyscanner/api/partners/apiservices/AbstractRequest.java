@@ -20,13 +20,14 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.constraints.NotBlank;
 
 @Setter
 @Getter

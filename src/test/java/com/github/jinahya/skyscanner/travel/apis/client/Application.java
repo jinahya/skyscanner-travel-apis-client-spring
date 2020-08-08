@@ -30,6 +30,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.MalformedURLException;
@@ -66,6 +67,14 @@ public class Application {
                 .build()
                 ;
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+//    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        return new MethodValidationPostProcessor();
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     @Value("${skyscanner-travel-apis.root-uri}")
     private String skyscannerTravelApisRootUri;

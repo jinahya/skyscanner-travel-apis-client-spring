@@ -22,21 +22,19 @@ package com.github.jinahya.skyscanner.travel.apis.client.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.nio.channels.Pipe;
 import java.nio.channels.ReadableByteChannel;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
-import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.core.io.buffer.DataBufferUtils.releaseConsumer;
-import static org.springframework.core.io.buffer.DataBufferUtils.write;
-import static reactor.core.publisher.Mono.fromFuture;
-import static reactor.core.publisher.Mono.using;
 
 @Slf4j
 public final class ResponseSpecUtils {
@@ -45,19 +43,21 @@ public final class ResponseSpecUtils {
                                                final Function<? super ReadableByteChannel, ? extends R> function) {
         requireNonNull(response, "response is null");
         requireNonNull(function, "function is null");
-        return using(
+        return Mono.using(
                 Pipe::open,
-                p -> fromFuture(supplyAsync(() -> function.apply(p.source())))
-                        .doFirst(() -> write(response.bodyToFlux(DataBuffer.class), p.sink())
-                                .doOnError(t -> log.error("failed to write body to pipe.sink", t))
-                                .doFinally(s -> {
-                                    try {
-                                        p.sink().close();
-                                    } catch (final IOException ioe) {
-                                        log.error("failed to close pipe.sink", ioe);
-                                    }
-                                })
-                                .subscribe(releaseConsumer())),
+                p -> Mono.fromFuture(CompletableFuture.supplyAsync(() -> function.apply(p.source())))
+                        .doFirst(
+                                () -> DataBufferUtils.write(response.bodyToFlux(DataBuffer.class), p.sink())
+                                        .doOnError(t -> log.error("failed to write body to pipe.sink", t))
+                                        .doFinally(s -> {
+                                            try {
+                                                p.sink().close();
+                                            } catch (final IOException ioe) {
+                                                log.error("failed to close pipe.sink", ioe);
+                                            }
+                                        })
+                                        .subscribe(releaseConsumer())
+                        ),
                 p -> {
                     try {
                         p.source().close();

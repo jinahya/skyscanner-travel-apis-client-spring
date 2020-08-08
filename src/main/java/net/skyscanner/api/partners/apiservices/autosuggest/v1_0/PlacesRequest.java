@@ -20,19 +20,25 @@ package net.skyscanner.api.partners.apiservices.autosuggest.v1_0;
  * #L%
  */
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @ToString
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Slf4j
-public class ListPlacesRequest {
+public class PlacesRequest {
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank

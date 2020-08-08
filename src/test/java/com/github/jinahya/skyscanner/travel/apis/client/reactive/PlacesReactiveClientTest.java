@@ -1,4 +1,8 @@
-import static org.junit.jupiter.api.Assertions.*;
-class PlacesReactiveClientTest {
-  
+package com.github.jinahya.skyscanner.travel.apis.client.reactive;
+
+class PlacesReactiveClientTest extends SkyscannerTravelApisReactiveClientTest<PlacesReactiveClient> {
+
+    PlacesReactiveClientTest() {
+        super(PlacesReactiveClient.class);
+    }
 }
