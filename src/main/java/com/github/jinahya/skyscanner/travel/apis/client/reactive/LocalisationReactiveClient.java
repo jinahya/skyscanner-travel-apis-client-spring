@@ -54,7 +54,7 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Retrieve locales.
+     * Retrieves locales.
      *
      * @param sink a flux sink to which parsed elements are pushed.
      * @return a mono to block.

@@ -20,31 +20,13 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * #L%
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-public abstract class AbstractSkyscannerTravelApisClient {
+abstract class SkyscannerTravelApisClientIT<T extends SkyscannerTravelApisClient>
+        extends AbstractSkyscannerTravelApisClientIT<T> {
 
-//    /**
-//     * A qualifier annotation for root URI of Skyscanner-Travel-APIs.
-//     */
-//    @Qualifier
-//    @Documented
-//    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
-//    @Retention(RetentionPolicy.RUNTIME)
-//    public @interface SkyscannerTravelApisRootUri {
-//
-//    }
-
-    @Autowired
-    @Accessors(fluent = true)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.PROTECTED)
-    private ObjectMapper objectMapper;
+    protected SkyscannerTravelApisClientIT(final Class<T> clientClass) {
+        super(clientClass);
+    }
 }

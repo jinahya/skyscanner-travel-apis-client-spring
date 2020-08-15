@@ -20,9 +20,51 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * #L%
  */
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.PostConstruct;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.net.URI;
 
 @Slf4j
 public abstract class SkyscannerTravelApisClient extends AbstractSkyscannerTravelApisClient {
 
+    /**
+     * A qualifier annotation for an instance of {@link RestTemplate} for accessing Skyscanner Travel APIs.
+     */
+    @Qualifier
+    @Documented
+    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface SkyscannerTravelApisRestTemplate {
+
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @PostConstruct
+    private void onPostConstruct() {
+        final URI rootUri = restTemplate.getUriTemplateHandler().expand("/");
+        log.debug("rootUri: {}", rootUri);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Lazy
+    @Autowired
+    @SkyscannerTravelApisRestTemplate
+    @Accessors(fluent = true)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    private RestTemplate restTemplate;
 }

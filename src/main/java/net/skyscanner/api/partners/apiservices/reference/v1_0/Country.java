@@ -22,7 +22,6 @@ package net.skyscanner.api.partners.apiservices.reference.v1_0;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,8 +31,7 @@ import net.skyscanner.api.partners.apiservices.AbstractResponse;
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @Setter
 @Getter
-@EqualsAndHashCode(callSuper = true)
-@ToString
+@ToString(callSuper = true)
 @Slf4j
 public class Country extends AbstractResponse {
 

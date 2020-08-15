@@ -34,7 +34,6 @@ import static java.util.Objects.requireNonNull;
 
 @EnabledIf("#{systemProperties['" + SYSTEM_PROPERTY_NAME_API_KEY + "'] != null}")
 @SpringBootTest
-@Accessors(fluent = true)
 @Slf4j
 public abstract class AbstractSkyscannerTravelApisClientIT<T extends AbstractSkyscannerTravelApisClient> {
 
@@ -43,9 +42,10 @@ public abstract class AbstractSkyscannerTravelApisClientIT<T extends AbstractSky
         this.clientClass = requireNonNull(clientClass, "clientClass is null");
     }
 
-    protected Class<T> clientClass;
+    protected final Class<T> clientClass;
 
     @Autowired
+    @Accessors(fluent = true)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
     private T clientInstance;

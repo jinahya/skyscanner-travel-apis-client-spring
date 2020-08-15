@@ -23,10 +23,7 @@ package net.skyscanner.api.partners.apiservices.pricing.v1_0;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +38,6 @@ import java.util.List;
 @ToString
 @Setter(AccessLevel.PROTECTED)
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
 @Slf4j
 public class FlightsLivePricesResultPollingResponse extends AbstractResponse {
 
@@ -52,7 +46,9 @@ public class FlightsLivePricesResultPollingResponse extends AbstractResponse {
     }
 
     public static FlightsLivePricesResultPollingResponse ofStatus(final Status status) {
-        return builder().status(status).build();
+        final FlightsLivePricesResultPollingResponse instance = new FlightsLivePricesResultPollingResponse();
+        instance.status = status;
+        return instance;
     }
 
     // ------------------------------------------------------------------------------------------------------ sessionKey

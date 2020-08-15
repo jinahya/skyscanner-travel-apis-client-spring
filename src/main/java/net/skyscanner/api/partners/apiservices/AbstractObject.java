@@ -22,19 +22,23 @@ package net.skyscanner.api.partners.apiservices;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.Transient;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder(toBuilder = true)
 @Slf4j
-public abstract class AbstractObject implements Serializable {
+public abstract class AbstractObject {
 
     /**
      * Sets an entry of unrecognized property.

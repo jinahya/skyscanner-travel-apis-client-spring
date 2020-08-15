@@ -1,4 +1,4 @@
-package com.github.jinahya.skyscanner.travel.apis.client;
+package net.skyscanner.api.partners.apiservices.reference.v1_0;
 
 /*-
  * #%L
@@ -20,13 +20,21 @@ package com.github.jinahya.skyscanner.travel.apis.client;
  * #L%
  */
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @Slf4j
-class SkyscannerTravelApisReactiveClientTest {
+public class Currencies {
 
-    @Test
-    void a() {
-    }
+    @NotEmpty
+    @Getter
+    private List<@Valid @NotNull Currency> currencies;
 }

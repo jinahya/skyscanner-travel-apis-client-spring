@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.Place;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.PlaceRequest;
 import net.skyscanner.api.partners.apiservices.autosuggest.v1_0.PlacesRequest;
+import net.skyscanner.api.partners.apiservices.geo.v1_0.Continent;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.FluxSink;
@@ -63,6 +64,17 @@ class PlacesReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<Places
         });
         clientInstance()
                 .retrievePlaces(placesRequest, placesProcessor.sink())
+                .block();
+    }
+
+    @Test
+    void testRetrieveGeoCatalog() {
+        final DirectProcessor<Continent> placesProcessor = DirectProcessor.create();
+        placesProcessor.subscribe(c -> {
+            log.debug("continent: {}", c);
+        });
+        clientInstance()
+                .retrieveGeoCatalog(null, placesProcessor.sink())
                 .block();
     }
 }

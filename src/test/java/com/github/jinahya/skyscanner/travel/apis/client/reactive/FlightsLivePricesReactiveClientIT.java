@@ -68,6 +68,8 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
                 .pollResult(location, resultPollingRequest)
                 .doOnNext(r -> {
                     log.debug("flights live prices response: {}", r.hashCode());
+                    log.debug("response.status.size: {}", r.getStatus());
+                    log.debug("response.itineraries.size: {}", r.getItineraries().size());
                     assertThat(validator.validate(r))
                             .isNotNull()
                             .isEmpty();

@@ -50,7 +50,7 @@ import static java.util.stream.Collectors.joining;
 @Setter(AccessLevel.PROTECTED)
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Slf4j
 public class FlightsLivePricesResultPollingRequest extends AbstractRequest {
@@ -67,14 +67,17 @@ public class FlightsLivePricesResultPollingRequest extends AbstractRequest {
      * Constants for {@code *DepartTime} attributes.
      */
     public enum DepartTime {
+
         /**
          * Morning.
          */
         M,
+
         /**
          * Afternoon.
          */
         A,
+
         /**
          * Evening.
          */

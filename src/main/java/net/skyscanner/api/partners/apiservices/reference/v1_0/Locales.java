@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices;
+package net.skyscanner.api.partners.apiservices.reference.v1_0;
 
 /*-
  * #%L
@@ -20,16 +20,21 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-@ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SuperBuilder(toBuilder = true)
-@Slf4j
-public abstract class AbstractRequest extends AbstractObject {
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+@Slf4j
+public class Locales {
+
+    @NotEmpty
+    @Getter
+    private List<@Valid @NotNull Locale> locales;
 }

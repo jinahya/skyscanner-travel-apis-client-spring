@@ -1,4 +1,4 @@
-package net.skyscanner.api.partners.apiservices;
+package com.github.jinahya.skyscanner.travel.apis.client;
 
 /*-
  * #%L
@@ -20,16 +20,9 @@ package net.skyscanner.api.partners.apiservices;
  * #L%
  */
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.slf4j.Slf4j;
+class LocalisationClientTest extends SkyscannerTravelApisClientTest<LocalisationClient> {
 
-@ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SuperBuilder(toBuilder = true)
-@Slf4j
-public abstract class AbstractRequest extends AbstractObject {
-
+    LocalisationClientTest() {
+        super(LocalisationClient.class);
+    }
 }

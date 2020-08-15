@@ -20,7 +20,6 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * #L%
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jinahya.skyscanner.travel.apis.client.AbstractSkyscannerTravelApisClient;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +28,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.lang.annotation.Documented;
@@ -37,7 +37,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Accessors(fluent = true)
 @Slf4j
 public abstract class SkyscannerTravelApisReactiveClient extends AbstractSkyscannerTravelApisClient {
 
@@ -48,19 +47,16 @@ public abstract class SkyscannerTravelApisReactiveClient extends AbstractSkyscan
     @Documented
     @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface SkyscannerTravelApisReactiveWebClient {
+    public @interface SkyscannerTravelApisWebClient {
 
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Lazy
     @Autowired
-    @SkyscannerTravelApisReactiveWebClient
+    @SkyscannerTravelApisWebClient
+    @Accessors(fluent = true)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
     private WebClient webClient;
-
-    @Autowired
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.PROTECTED)
-    private ObjectMapper objectMapper;
 }
