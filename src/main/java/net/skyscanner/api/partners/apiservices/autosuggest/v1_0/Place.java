@@ -27,14 +27,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import net.skyscanner.api.partners.apiservices.AbstractResponse;
+import net.skyscanner.api.partners.apiservices.AbstractObject;
 
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @ToString
 @Setter(AccessLevel.PROTECTED)
 @Getter
 @Slf4j
-public class Place extends AbstractResponse {
+public class Place extends AbstractObject {
 
     private String placeId;
 

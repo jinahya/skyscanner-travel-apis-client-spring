@@ -34,7 +34,7 @@ import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
-@ToString
+@ToString(doNotUseGetters = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder(toBuilder = true)
 @Slf4j

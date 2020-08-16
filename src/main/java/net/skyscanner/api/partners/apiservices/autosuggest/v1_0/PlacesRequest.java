@@ -27,6 +27,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import net.skyscanner.api.partners.apiservices.AbstractRequest;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,7 +39,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Slf4j
-public class PlacesRequest {
+public class PlacesRequest extends AbstractRequest {
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
