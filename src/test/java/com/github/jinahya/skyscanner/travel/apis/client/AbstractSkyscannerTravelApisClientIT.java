@@ -29,6 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
+import javax.validation.Validator;
+
 import static com.github.jinahya.skyscanner.travel.apis.client.Application.SYSTEM_PROPERTY_NAME_API_KEY;
 import static java.util.Objects.requireNonNull;
 
@@ -49,4 +51,10 @@ public abstract class AbstractSkyscannerTravelApisClientIT<T extends AbstractSky
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
     private T clientInstance;
+
+    @Autowired
+    @Accessors(fluent = true)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    private Validator validator;
 }

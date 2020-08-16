@@ -24,11 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingRequest;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesSessionCreationRequest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
-import javax.validation.Validator;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -60,6 +58,7 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
                 .adults(1)
                 .build();
         final String location = clientInstance().createSession(sessionCreationRequest).block();
+        log.debug("location: {}", location);
         assertThat(location).isNotEmpty();
         final FlightsLivePricesResultPollingRequest resultPollingRequest
                 = FlightsLivePricesResultPollingRequest.builder()
@@ -67,17 +66,11 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
         clientInstance()
                 .pollResult(location, resultPollingRequest)
                 .doOnNext(r -> {
-                    log.debug("flights live prices response: {}", r.hashCode());
-                    log.debug("response.status.size: {}", r.getStatus());
+                    log.debug("response.hashCode: {}", r.hashCode());
+                    log.debug("response.status: {}", r.getStatus());
                     log.debug("response.itineraries.size: {}", r.getItineraries().size());
-                    assertThat(validator.validate(r))
-                            .isNotNull()
-                            .isEmpty();
+                    assertThat(validator().validate(r)).isEmpty();
                 })
                 .blockLast();
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Autowired
-    private Validator validator;
 }

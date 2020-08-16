@@ -47,6 +47,14 @@ import static org.springframework.web.reactive.function.BodyInserters.fromFormDa
 public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiveClient {
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Creates a new session for polling prices.
+     *
+     * @param request a request object.
+     * @return a mono of {@code Location} header value.
+     * @see #pollResult(String, FlightsLivePricesResultPollingRequest)
+     */
     @NonNull
     public Mono<String> createSession(@Valid @NotNull final FlightsLivePricesSessionCreationRequest request) {
         return webClient()
@@ -65,6 +73,14 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
                 });
     }
 
+    /**
+     * Polls live prices.
+     *
+     * @param location a {@code Location} header value from {@link #createSession(FlightsLivePricesSessionCreationRequest)}
+     *                 method.
+     * @param request  a request object.
+     * @return a flux of live prices.
+     */
     @NonNull
     public Flux<FlightsLivePricesResultPollingResponse> pollResult(
             @NotBlank final String location, @NotNull final FlightsLivePricesResultPollingRequest request) {
