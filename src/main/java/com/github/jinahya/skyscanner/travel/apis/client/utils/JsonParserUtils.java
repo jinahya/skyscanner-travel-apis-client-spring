@@ -65,10 +65,8 @@ public final class JsonParserUtils {
         requireNonNull(elementConsumer, "elementConsumer is null");
         final JsonToken currentToken = jsonParser.currentToken();
         if (currentToken != JsonToken.START_ARRAY) {
-            final JsonToken startArray = jsonParser.nextToken();
-            if (startArray == JsonToken.START_ARRAY) {
-                throw new IllegalArgumentException("jsonParser.(current|next)Token must be " + JsonToken.START_ARRAY);
-            }
+            throw new IllegalArgumentException(
+                    "jsonParser.currentToken is not " + JsonToken.START_ARRAY + " but " + currentToken);
         }
         while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
             final T elementValue = jsonParser.readValueAs(elementClass);
@@ -79,7 +77,7 @@ public final class JsonParserUtils {
     /**
      * Parses wrapped array elements in a document and accepts each element to specified consumer.
      * <p>
-     * Some (of all) of Skyscanner Travel APIs respond JSON documents look like this.
+     * Some Skyscanner Travel APIs respond JSON documents look like this.
      * <blockquote><pre>
      * {
      *   "Some-Unnecessary-Field": [
@@ -91,7 +89,7 @@ public final class JsonParserUtils {
      *   ]
      * }
      * </pre></blockquote>
-     * This method locates the array(e.g. {@code "Some-Unnecessary-Field"}) and parses and accepts each element to
+     * This method locates the root array(e.g. {@code "Some-Unnecessary-Field"}) and accepts each parsed element to
      * specified consumer.
      *
      * @param jsonParser      a json parser.
@@ -116,9 +114,11 @@ public final class JsonParserUtils {
         // parse array elements
         parseArray(jsonParser, elementClass, elementConsumer);
         // discard all tokens to the end
-        while (jsonParser.currentToken() != null && jsonParser.currentToken() != JsonToken.NOT_AVAILABLE) {
-            final JsonToken token = jsonParser.nextToken();
+        for (JsonToken token; (token = jsonParser.nextToken()) != null; ) {
         }
+//        while (jsonParser.currentToken() != null && jsonParser.currentToken() != JsonToken.NOT_AVAILABLE) {
+//            final JsonToken token = jsonParser.nextToken();
+//        }
     }
 
     private JsonParserUtils() {

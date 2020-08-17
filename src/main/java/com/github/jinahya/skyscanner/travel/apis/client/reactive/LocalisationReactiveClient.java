@@ -30,12 +30,15 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.Disposable;
+import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Collection;
 
 import static com.github.jinahya.skyscanner.travel.apis.client.utils.JsonParserUtils.parseWrappedArrayInDocument;
 import static com.github.jinahya.skyscanner.travel.apis.client.utils.ResponseSpecUtils.pipeBodyAndAccept;
@@ -82,6 +85,22 @@ public class LocalisationReactiveClient extends SkyscannerTravelApisReactiveClie
         );
     }
 
+    /**
+     * Retrieves locales and adds to specified collection.
+     *
+     * @param collection the collection to which retrieved locales are added.
+     * @return specified collection.
+     * @see #retrieveCurrencies(FluxSink)
+     */
+    @NonNull
+    public <T extends Collection<? super Locale>> T retrieveLocales(@NotNull final T collection) {
+        final DirectProcessor<Locale> processor = DirectProcessor.create();
+        final Disposable disposable = processor.subscribe(collection::add);
+        retrieveLocales(processor.sink()).block();
+        return collection;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * Retrieves currencies.
      *

@@ -27,6 +27,11 @@ import net.skyscanner.api.partners.apiservices.reference.v1_0.Locale;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.DirectProcessor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @Slf4j
 class LocalisationReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<LocalisationReactiveClient> {
 
@@ -34,17 +39,18 @@ class LocalisationReactiveClientIT extends SkyscannerTravelApisReactiveClientIT<
         super(LocalisationReactiveClient.class);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Test
     void testRetrieveLocales() {
-        final DirectProcessor<Locale> processor = DirectProcessor.create();
-        processor.subscribe(l -> {
+        final List<Locale> locales = clientInstance().retrieveLocales(new ArrayList<>());
+        assertNotNull(locales);
+        locales.forEach(l -> {
+            assertNotNull(l);
             log.debug("locale: {}", l);
         });
-        clientInstance()
-                .retrieveLocales(processor.sink())
-                .block();
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Test
     void testRetrieveCurrencies() {
         final DirectProcessor<Currency> processor = DirectProcessor.create();

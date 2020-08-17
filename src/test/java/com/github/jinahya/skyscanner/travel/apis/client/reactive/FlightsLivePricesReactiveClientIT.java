@@ -20,15 +20,23 @@ package com.github.jinahya.skyscanner.travel.apis.client.reactive;
  * #L%
  */
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import lombok.extern.slf4j.Slf4j;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingRequest;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesSessionCreationRequest;
+import net.skyscanner.api.partners.apiservices.reference.v1_0.Country;
+import net.skyscanner.api.partners.apiservices.reference.v1_0.Currency;
+import net.skyscanner.api.partners.apiservices.reference.v1_0.Locale;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
+import reactor.core.publisher.DirectProcessor;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.github.jinahya.skyscanner.travel.apis.client.Application.SYSTEM_PROPERTY_NAME_API_KEY;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,10 +74,17 @@ class FlightsLivePricesReactiveClientIT extends SkyscannerTravelApisReactiveClie
         clientInstance()
                 .pollResult(location, resultPollingRequest)
                 .doOnNext(r -> {
-                    log.debug("response.hashCode: {}", r.hashCode());
+                    log.debug("response.hashCode: {}", String.format("0x%08x", r.hashCode()));
                     log.debug("response.status: {}", r.getStatus());
                     log.debug("response.itineraries.size: {}", r.getItineraries().size());
                     assertThat(validator().validate(r)).isEmpty();
+                })
+                .filter(r -> {
+                    final boolean empty = r.getItineraries().isEmpty();
+                    if (empty) {
+                        log.debug("filtering... empty");
+                    }
+                    return !empty;
                 })
                 .blockLast();
     }

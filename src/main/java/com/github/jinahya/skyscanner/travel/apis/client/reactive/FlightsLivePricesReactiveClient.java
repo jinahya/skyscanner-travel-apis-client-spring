@@ -26,6 +26,7 @@ import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesRes
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesResultPollingResponse;
 import net.skyscanner.api.partners.apiservices.pricing.v1_0.FlightsLivePricesSessionCreationRequest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -49,10 +50,10 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Creates a new session for polling prices.
+     * Creates a new session for polling prices and returns the {@link HttpHeaders#LOCATION} header value.
      *
      * @param request a request object.
-     * @return a mono of {@code Location} header value.
+     * @return a mono with the {@link HttpHeaders#LOCATION} header value.
      * @see #pollResult(String, FlightsLivePricesResultPollingRequest)
      */
     @NonNull
@@ -64,9 +65,16 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
                 .body(fromFormData(request.toFormData()))
                 .exchange()
                 .handle((r, s) -> {
+                    final HttpStatus status = r.statusCode();
+                    if (!status.is2xxSuccessful()) {
+                        log.error("an unsuccessful status received: " + status);
+                        s.error(r.createException().block());
+                        return;
+                    }
                     final String location = r.headers().asHttpHeaders().getFirst(HttpHeaders.LOCATION);
                     if (location == null) {
-                        s.error(new RuntimeException("no location header received"));
+                        log.error("no {} header received", HttpHeaders.LOCATION);
+                        s.error(r.createException().block());
                         return;
                     }
                     s.next(location);
@@ -76,14 +84,15 @@ public class FlightsLivePricesReactiveClient extends SkyscannerTravelApisReactiv
     /**
      * Polls live prices.
      *
-     * @param location a {@code Location} header value from {@link #createSession(FlightsLivePricesSessionCreationRequest)}
+     * @param location a {@link HttpHeaders#LOCATION} header value from {@link #createSession(FlightsLivePricesSessionCreationRequest)}
      *                 method.
      * @param request  a request object.
      * @return a flux of live prices.
+     * @see #createSession(FlightsLivePricesSessionCreationRequest)
      */
     @NonNull
     public Flux<FlightsLivePricesResultPollingResponse> pollResult(
-            @NotBlank final String location, @NotNull final FlightsLivePricesResultPollingRequest request) {
+            @NotBlank final String location, @Valid @NotNull final FlightsLivePricesResultPollingRequest request) {
         return Flux.generate(
                 () -> UpdatesPending,
                 (state, sink) -> {

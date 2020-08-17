@@ -35,8 +35,6 @@ import net.skyscanner.api.partners.apiservices.AbstractResponse;
 @Slf4j
 public class Country extends AbstractResponse {
 
-    private static final long serialVersionUID = 3201164038531344103L;
-
     private String code;
 
     private String name;
