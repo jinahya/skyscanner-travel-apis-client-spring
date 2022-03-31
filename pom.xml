@@ -55,7 +55,7 @@
     <version.maven-surefire>3.0.0-M5</version.maven-surefire>
     <version.org.projectlombok>1.18.12</version.org.projectlombok>
     <version.org.springframework>5.2.8.RELEASE</version.org.springframework>
-    <version.org.springframework.boot>2.3.2.RELEASE</version.org.springframework.boot>
+    <version.org.springframework.boot>2.5.12</version.org.springframework.boot>
   </properties>
 
   <dependencyManagement>
